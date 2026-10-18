@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>スレスパ2 ラン記録集計</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1 id="app-title"></h1>
+    <p id="app-note" class="note"></p>
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="load"></button>
+      <button type="button" role="tab" data-tab="single"></button>
+      <button type="button" role="tab" data-tab="coop"></button>
+      <button type="button" role="tab" data-tab="dict"></button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="panel-load" class="panel" data-panel="load"></section>
+    <section id="panel-single" class="panel" data-panel="single" hidden></section>
+    <section id="panel-coop" class="panel" data-panel="coop" hidden></section>
+    <section id="panel-dict" class="panel" data-panel="dict" hidden></section>
+  </main>
+
+  <!-- 読み込み順に意味がある（後のファイルが前のファイルを使う） -->
+  <script src="js/strings.js"></script>
+  <script src="js/parse.js"></script>
+  <script src="js/normalize.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/loader.js"></script>
+  <script src="js/dictionary.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/analysis-rewards.js"></script>
+  <script src="js/analysis-combat.js"></script>
+  <script src="js/analysis-potions.js"></script>
+  <script src="js/analysis-events.js"></script>
+  <script src="js/analysis-upgrades.js"></script>
+  <script src="js/analysis-shop.js"></script>
+  <script src="js/analysis-ancient.js"></script>
+  <script src="js/analysis-deck.js"></script>
+  <script src="js/trend.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/review.js"></script>
+  <script src="js/records.js"></script>
+  <script src="js/challenges.js"></script>
+  <script src="js/coop.js"></script>
+  <script src="js/backup.js"></script>
+  <script src="js/csv.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/views-analysis.js"></script>
+  <script src="js/views-analysis2.js"></script>
+  <script src="js/views-analysis3.js"></script>
+  <script src="js/views-stage3.js"></script>
+  <script src="js/views-stage3b.js"></script>
+  <script src="js/views-stage4.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

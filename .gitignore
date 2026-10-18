@@ -1,0 +1,5 @@
+# 実データ（SteamIDを含むのでGitHubに上げない）
+sample-runs/
+
+# Windowsがフォルダの表示設定を保存する隠しファイル
+desktop.ini
