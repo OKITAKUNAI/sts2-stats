@@ -58,6 +58,36 @@ v0.98.1 〜 v0.111.0（Steam版）の記録で動作を確認しています。�
 
 ※ コピー先に OneDrive の中のフォルダ（「ドキュメント」など）は使わないでください。.run にはSteamIDが含まれ、OneDrive に同期されてしまいます。そのため copy-runs.bat は、OneDrive の外にあるユーザーフォルダにコピーします。
 
+## Mac をお使いの場合（未確認の情報を含みます）
+このアプリの作者は Mac で確かめていません。次の内容は未確認です。うまくいかない場合は、下の「別の読み込み方法」を使ってください。
+
+### ラン記録ファイルの場所（未確認）
+```
+~/Library/Application Support/SlayTheSpire2/steam/<SteamID>/profile1/saves/history
+```
+の可能性が高いです（`~` はホームフォルダのことです）。
+
+開き方：
+1. Finder を開き、Command＋Shift＋G（「フォルダへ移動」）を押します。
+2. `~/Library/Application Support/SlayTheSpire2` を貼り付けて Return を押します（「ライブラリ」フォルダはふだん隠れているので、この方法で開きます）。
+3. `steam` → 数字のフォルダ → `profile1` → `saves` → `history` の順に開きます。
+
+見つからない場合は、Finder で「SlayTheSpire2」を検索してください。
+
+### copy-runs.command（Mac 用のコピー）
+Windows の `copy-runs.bat` と同じく、`.run` だけを `~/sts2-runs`（ホームフォルダの中の sts2-runs）にコピーします。コピー先にまだ無いファイルだけをコピーし、元のファイルは読むだけで、変更・削除は一切しません。この場所もブラウザの制限で直接選べない可能性が高いため、コピーしてから読み込みます。
+1. このページのファイル一覧で `copy-runs.command` を押し、「Download raw file」で保存します。
+2. 初回だけ、「ターミナル」（アプリケーション → ユーティリティ）を開きます。`chmod +x `（最後に半角スペース）と入力し、保存した `copy-runs.command` をターミナルの画面にドラッグ＆ドロップして Return を押します（実行してよいという印を付ける操作です）。
+3. `copy-runs.command` をダブルクリックします。「開発元を確認できないため開けません」と出た場合は、右クリック →「開く」を選ぶか、「システム設定」→「プライバシーとセキュリティ」の下の方にある「このまま開く」を押します。
+4. アプリの「sts2-runs フォルダを選ぶ」を押し、ホームフォルダの中の `sts2-runs` を選びます（Command＋Shift＋G で `~/sts2-runs` と入力しても開けます）。
+
+`copy-runs.command` がうまく開けない場合は、「ターミナル」に次の1行を貼り付けて Return を押しても、同じようにコピーできます（最後に、コピー先にある .run の件数が表示されます）。
+```
+mkdir -p ~/sts2-runs && for f in ~/Library/Application\ Support/SlayTheSpire2/steam/*/profile1/saves/history/*.run; do [ -e ~/sts2-runs/"${f##*/}" ] || cp -p "$f" ~/sts2-runs/; done; ls ~/sts2-runs/*.run | wc -l
+```
+
+Safari はフォルダの記憶に対応していません。Safari では「.run ファイルを選ぶ」かドラッグ＆ドロップで読み込んでください（Chrome なら Windows と同じように使えます）。
+
 ## 別の読み込み方法（Chrome・Edge以外のブラウザ、または copy-runs.bat を使わない場合）
 - **.run ファイルを選ぶ**：「.run ファイルを選ぶ」を押し、開いた画面のアドレス欄に `%APPDATA%\SlayTheSpire2` と入力して history フォルダまで進み、Ctrl＋A で全部選んで「開く」を押します。この方法なら AppData の中からも直接選べます
 - **ドラッグ＆ドロップ**：.run ファイルや、.run の入ったフォルダを、画面の枠の中にドラッグ＆ドロップします

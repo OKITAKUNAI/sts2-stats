@@ -2,3 +2,5 @@
 *.bat -text
 # テスト用の .run はゲームが書き出したままの形で保存する（改行を変換しない）
 test-data/** -text
+# Mac 用の .command は改行を LF で保存する（Mac で動くように）
+*.command text eol=lf

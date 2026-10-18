@@ -19,6 +19,22 @@ STS.T = {
     where: 'ゲームのラン記録（.run）は次の場所にあります。',
     path: '%APPDATA%\\SlayTheSpire2\\steam\\<SteamID>\\profile1\\saves\\history',
     whyCopy: 'この場所（AppData の中）は、ブラウザの安全のための制限でフォルダとして直接選べません。そこで、付属の copy-runs.bat で .run ファイルだけを、ユーザーフォルダの中の sts2-runs フォルダ（C:\\Users\\あなたの名前\\sts2-runs）へコピーし、そのフォルダを選びます。copy-runs.bat はゲームのファイルを読むだけで、変更も削除もしません。',
+    mac: {
+      heading: 'Mac をお使いの場合（未確認の情報を含みます）',
+      where: 'Mac では、次の場所にある可能性が高いですが、まだ確かめられていません。',
+      path: '~/Library/Application Support/SlayTheSpire2/steam/<SteamID>/profile1/saves/history',
+      finder: '開き方：Finder で Command＋Shift＋G（「フォルダへ移動」）を押し、~/Library/Application Support/SlayTheSpire2 を貼り付けて Return を押します。「ライブラリ」フォルダはふだん隠れているので、この方法で開いてください。見つからない場合は、Finder で「SlayTheSpire2」を検索してください。',
+      why: 'この場所も、ブラウザの制限で直接選べない可能性が高いため、Windows と同じく .run だけを別のフォルダ（~/sts2-runs：ホームフォルダの中の sts2-runs）にコピーしてから読み込みます。',
+      steps: [
+        'GitHub の sts2-stats のページから copy-runs.command をダウンロードします（Windows の copy-runs.bat と同じ働きをする Mac 用のファイルです）。',
+        '初回だけ、「ターミナル」を開いて「chmod +x 」（最後に半角スペース）と入力し、ダウンロードした copy-runs.command をターミナルの画面にドラッグ＆ドロップして Return を押します（実行してよいという印を付ける操作です）。',
+        'copy-runs.command をダブルクリックします。「開発元を確認できないため開けません」と出た場合は、右クリック →「開く」を選ぶか、「システム設定」→「プライバシーとセキュリティ」の下の方にある「このまま開く」を押してください。',
+        'このアプリで「sts2-runs フォルダを選ぶ」を押し、ホームフォルダの中の sts2-runs を選びます（Command＋Shift＋G で ~/sts2-runs と入力しても開けます）。',
+      ],
+      oneLiner: 'copy-runs.command がうまく開けない場合は、「ターミナル」に次の1行を貼り付けて Return を押しても、同じようにコピーできます（最後にコピー先の .run の件数が表示されます）：',
+      command: 'mkdir -p ~/sts2-runs && for f in ~/Library/Application\\ Support/SlayTheSpire2/steam/*/profile1/saves/history/*.run; do [ -e ~/sts2-runs/"${f##*/}" ] || cp -p "$f" ~/sts2-runs/; done; ls ~/sts2-runs/*.run | wc -l',
+      safari: 'Safari はフォルダの記憶に対応していません。Safari では下の「.run ファイルを選ぶ」かドラッグ＆ドロップで読み込んでください（Chrome なら Windows と同じように使えます）。',
+    },
     oneDrive: '※ コピー先に OneDrive の中のフォルダ（「ドキュメント」など）は使わないでください。.run にはSteamIDが含まれ、OneDrive に同期されてしまいます。',
     steps: [
       'copy-runs.bat をダブルクリックします（黒い画面が開き、新しい .run だけがコピーされます。終わったら何かキーを押して閉じます）。',
@@ -43,7 +59,7 @@ STS.T = {
     drop: 'ここに .run ファイルや、.run の入ったフォルダをドラッグ＆ドロップしても読み込めます',
 
     working: '読み込み中…',
-    result: (r) => `新しく追加：${r.added}件 ／ ${r.replaced ? `架空のIDから本物のIDに置き換え：${r.replaced}件 ／ ` : ''}読み込み済みのため飛ばした：${r.known}件 ／ 同じランの重複：${r.dup}件 ／ .run.backup（.run の完全なコピーなので読まない）：${r.backup}件 ／ .run 以外のファイル：${r.other}件 ／ 読めなかった：${r.errors.length}件`,
+    result: (r) => `新しく追加：${r.added}件 ／ ${r.replaced ? `架空のIDから本物のIDに置き換え：${r.replaced}件 ／ ` : ''}読み込み済みのため飛ばした：${r.known}件 ／ 同じランの重複：${r.dup}件 ／ .run.backup（.run の完全なコピーなので読まない）：${r.backup}件 ／ .run 以外のファイル：${r.other}件${r.otherNames && r.otherNames.length ? `（例：${r.otherNames.join('、')}）` : ''} ／ 読めなかった：${r.errors.length}件`,
     errorsHeading: '読めなかったファイル',
     noRunFound: 'このフォルダには .run ファイルがありませんでした。copy-runs.bat を実行したか、sts2-runs フォルダを選んでいるか確認してください。',
     pickFailed: 'フォルダを開けませんでした。下の「別の方法」で読み込んでください。',

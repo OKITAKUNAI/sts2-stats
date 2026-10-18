@@ -13,14 +13,21 @@ STS.loader = (function () {
   // known: { files: Set(ファイル名), keys: Set(ランのキー), fakeKeys: Set(架空のIDで保存しているランのキー) }
   // 同じランが架空のID（共有用バックアップから復元したもの）で保存されていれば、本物のIDで置き換える
   async function importEntries(entries, known, onProgress) {
-    const r = { added: 0, replaced: 0, known: 0, dup: 0, backup: 0, other: 0, errors: [], runFiles: 0, records: [] };
+    const r = { added: 0, replaced: 0, known: 0, dup: 0, backup: 0, other: 0, otherNames: [], errors: [], runFiles: 0, records: [] };
+    // OSが自動で作る隠しファイルは、飛ばしたファイル名の例に出さない（件数には数える）
+    const SYSTEM_FILES = ['desktop.ini', 'thumbs.db', '.ds_store'];
     let i = 0;
     for (const e of entries) {
       i += 1;
       const name = e.name;
       const lower = name.toLowerCase();
       if (lower.endsWith('.run.backup')) { r.backup += 1; continue; }
-      if (!lower.endsWith('.run')) { r.other += 1; continue; }
+      if (!lower.endsWith('.run')) {
+        r.other += 1;
+        // 名前が違うファイルに気づけるよう、例として最大5件まで名前を残す
+        if (r.otherNames.length < 5 && !SYSTEM_FILES.includes(lower) && !name.startsWith('.')) r.otherNames.push(name);
+        continue;
+      }
       r.runFiles += 1;
       if (known.files.has(name)) { r.known += 1; continue; }
       let text;

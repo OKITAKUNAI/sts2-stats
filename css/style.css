@@ -174,3 +174,4 @@ label.field input, label.field textarea { display: block; width: 100%; margin-to
 
 /* データの保存 */
 .table-tools { display: flex; justify-content: flex-end; margin: 2px 0; }
+pre.cmd { white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; user-select: all; }

@@ -119,6 +119,12 @@ window.STS = window.STS || {};
       el('p', null, L.whyCopy),
       el('ol', null, L.steps.map((s) => el('li', null, s))),
       el('p', { class: 'note' }, L.oneDrive),
+      el('details', { class: 'how' }, el('summary', null, L.mac.heading),
+        el('p', null, L.mac.where), el('p', { class: 'path' }, L.mac.path),
+        el('p', { class: 'note' }, L.mac.finder), el('p', { class: 'note' }, L.mac.why),
+        el('ol', null, L.mac.steps.map((s) => el('li', null, s))),
+        el('p', { class: 'note' }, L.mac.oneLiner), el('pre', { class: 'path cmd' }, L.mac.command),
+        el('p', { class: 'note' }, L.mac.safari)),
       el('p', { class: 'note' }, L.noAuto),
     ));
 
