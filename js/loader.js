@@ -100,6 +100,14 @@ STS.loader = (function () {
   }
 
   // 読む許可を確認し、必要ならブラウザの確認画面を出す（ボタンを押した直後に呼ぶ必要がある）
+  // 許可があるかを尋ねるだけ（確認画面は出さない）。ページを開いたときの自動読み込みに使う
+  // 戻り値：'granted'（許可済み）／'prompt'（尋ねる必要がある）／'denied'（拒否）
+  async function checkPermission(handle) {
+    try {
+      return handle && handle.queryPermission ? await handle.queryPermission({ mode: 'read' }) : 'prompt';
+    } catch (e) { return 'prompt'; }
+  }
+
   async function ensurePermission(handle) {
     const opts = { mode: 'read' };
     if (handle.queryPermission && (await handle.queryPermission(opts)) === 'granted') return true;
@@ -118,6 +126,6 @@ STS.loader = (function () {
 
   return {
     folderSupported, importEntries, entriesFromFiles, entriesFromDrop,
-    getSavedFolder, pickFolder, forgetFolder, ensurePermission, entriesFromFolder,
+    getSavedFolder, pickFolder, forgetFolder, checkPermission, ensurePermission, entriesFromFolder,
   };
 })();

@@ -89,17 +89,26 @@ window.STS = window.STS || {};
     msgBox.textContent = text || '';
   }
 
-  async function runImport(getEntries) {
+  // opts.auto：ページを開いたときの自動読み込み（失敗しても止めず、ボタンでの読み込みに切り替える）
+  async function runImport(getEntries, opts = {}) {
     setMsg(T.load.working);
     try {
       const entries = await getEntries();
       const r = await STS.loader.importEntries(entries, knownSets(), (i, n) => setMsg(`${T.load.working} ${i} / ${n}`));
       state.lastImport = r;
+      if (state.folder) state.permission = 'granted';
       await loadFromStorage();
       render();
       if (r.runFiles === 0) setMsg(T.load.noRunFound, 'warn');
-      else setMsg(T.load.result(r), r.errors.length ? 'warn' : 'ok');
+      else setMsg(`${opts.auto ? T.load.autoDone : ''}${T.load.result(r)}`, r.errors.length ? 'warn' : 'ok');
     } catch (e) {
+      if (opts.auto) {
+        // 記憶したフォルダが消された・名前が変わった、などのとき
+        state.permission = 'lost';
+        render();
+        setMsg(`${T.load.autoFailed}（${e && e.message || e}）`, 'warn');
+        return;
+      }
       if (e && e.name === 'AbortError') { setMsg(''); return; } // 選択画面で「キャンセル」した
       if (e && e.name === 'Permission') { setMsg(e.message, 'error'); return; }
       setMsg(`${T.load.pickFailed}（${e && e.message || e}）`, 'error');
@@ -116,6 +125,7 @@ window.STS = window.STS || {};
       el('h2', null, L.heading),
       el('p', null, L.where),
       el('p', { class: 'path' }, L.path),
+      el('p', { class: 'note' }, L.profileNote),
       el('p', null, L.whyCopy),
       el('ol', null, L.steps.map((s) => el('li', null, s))),
       el('p', { class: 'note' }, L.oneDrive),
@@ -130,12 +140,15 @@ window.STS = window.STS || {};
 
     // フォルダ記憶（Chrome / Edge）
     const folderCard = el('div', { class: 'card' }, el('h3', null, L.folderHeading));
+    const needsClick = !!state.folder && state.permission !== 'granted';
     if (STS.loader.folderSupported()) {
       folderCard.append(
+        needsClick && state.permission !== 'lost' ? el('p', { class: 'msg warn' }, L.needPermission) : null,
         el('p', { class: 'note' }, state.folder ? L.rememberedFolder(state.folder.name) : L.noFolder),
         el('div', { class: 'btn-row' },
           el('button', {
-            type: 'button', class: 'btn primary', disabled: !state.folder,
+            // 記憶したフォルダはあるが、読む許可が残っていないときは目立たせる
+            type: 'button', class: `btn primary${needsClick ? ' attention' : ''}`, disabled: !state.folder,
             onclick: () => runImport(async () => {
               if (!(await STS.loader.ensurePermission(state.folder))) {
                 const err = new Error(T.load.permissionDenied); err.name = 'Permission'; throw err;
@@ -148,6 +161,7 @@ window.STS = window.STS || {};
             onclick: () => runImport(async () => {
               const h = await STS.loader.pickFolder();
               state.folder = h;
+              state.permission = 'granted';
               return STS.loader.entriesFromFolder(h);
             }),
           }, L.pickFolder),
@@ -340,7 +354,20 @@ window.STS = window.STS || {};
     try { await STS.dict.load(); await STS.challenges.load(); await STS.coop.load(); await loadFromStorage(); } catch (e) { setMsg(String(e && e.message || e), 'error'); }
     render();
     selectTab('load');
+    await autoLoad();
   }
+
+  // ページを開いたとき：記憶したフォルダに読む許可が残っていれば、ボタンを押さなくても新しいランを読み込む
+  // （許可の確認画面を出す命令は、ボタンを押した直後しか使えないので、ここでは尋ねるだけ）
+  async function autoLoad() {
+    if (!STS.loader.folderSupported() || !state.folder) return;
+    state.permission = await STS.loader.checkPermission(state.folder);
+    if (state.permission !== 'granted') { render(); return; }
+    await runImport(() => STS.loader.entriesFromFolder(state.folder), { auto: true });
+  }
+
+  // 動作確認用（ブラウザの開発ツールから、許可の状態を変えて試すため）
+  STS.app = { autoLoad, render };
 
   init();
 })();
