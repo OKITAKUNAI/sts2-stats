@@ -35,7 +35,13 @@ window.STS = window.STS || {};
   async function loadFromStorage() {
     const records = await STS.storage.getAllRuns();
     state.runs = records.map((r) => {
-      try { const n = STS.normalize.normalizeRun(r.raw, r.file); n.fakeIds = !!r.fakeIds; return n; } catch (e) { return null; }
+      try {
+        const n = STS.normalize.normalizeRun(r.raw, r.file);
+        n.fakeIds = !!r.fakeIds;
+        n.fileSize = typeof r.fileSize === 'number' ? r.fileSize : null;   // 読んだときのファイルの大きさ
+        n.fileMtime = typeof r.fileMtime === 'number' ? r.fileMtime : null; // 読んだときのファイルの更新日時
+        return n;
+      } catch (e) { return null; }
     }).filter(Boolean).sort((a, b) => (a.startTime || 0) - (b.startTime || 0));
     detectSelf();
     const saved = await STS.storage.getMeta(SELF_KEY).catch(() => null);
@@ -57,7 +63,8 @@ window.STS = window.STS || {};
   function knownSets() {
     return {
       // 架空のIDで保存しているランは、同じファイルでも読み直して本物のIDに置き換える
-      files: new Set(state.runs.filter((r) => !r.fakeIds).map((r) => r.file).filter(Boolean)),
+      // ファイル名 → そのとき読んだランのキーと、ファイルの大きさ・更新日時（変わっていたら読み直す）
+      files: new Map(state.runs.filter((r) => !r.fakeIds && r.file).map((r) => [r.file, { key: r.key, size: r.fileSize, mtime: r.fileMtime }])),
       keys: new Set(state.runs.map((r) => r.key)),
       fakeKeys: new Set(state.runs.filter((r) => r.fakeIds).map((r) => r.key)),
     };
@@ -178,6 +185,7 @@ window.STS = window.STS || {};
     folderCard.append(msgBox);
     if (state.lastImport && state.lastImport.errors.length) {
       folderCard.append(el('h3', null, L.errorsHeading),
+        el('p', { class: 'note' }, L.errorsNote),
         el('ul', { class: 'compact' }, state.lastImport.errors.slice(0, 50).map((e) => el('li', null, `${e.name}：${e.error}`))));
     }
     panel.append(folderCard);

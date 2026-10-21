@@ -48,6 +48,22 @@ STS.storage = (function () {
     await done(tx);
   }
 
+  // 保存しているランに、ファイルの大きさ・更新日時だけを書き足す（中身はそのまま）
+  // items: [{ key, fileSize, fileMtime }]
+  async function updateRunMeta(items) {
+    if (!items.length) return;
+    const db = await open();
+    const tx = db.transaction('runs', 'readwrite');
+    const store = tx.objectStore('runs');
+    items.forEach((it) => {
+      const req = store.get(it.key);
+      req.onsuccess = () => {
+        if (req.result) store.put({ ...req.result, fileSize: it.fileSize, fileMtime: it.fileMtime });
+      };
+    });
+    await done(tx);
+  }
+
   async function getAllRuns() {
     const db = await open();
     return result(db.transaction('runs').objectStore('runs').getAll());
@@ -85,5 +101,5 @@ STS.storage = (function () {
     await done(tx);
   }
 
-  return { putRuns, getAllRuns, getMeta, setMeta, deleteMeta, clearAll };
+  return { putRuns, updateRunMeta, getAllRuns, getMeta, setMeta, deleteMeta, clearAll };
 })();

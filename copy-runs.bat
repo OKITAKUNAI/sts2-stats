@@ -1,98 +1,125 @@
 @echo off
-chcp 65001 > nul
+rem ‚±‚Ìƒtƒ@ƒCƒ‹‚Í Shift_JIS ‚Å•Û‘¶‚µ‚Ä‚¢‚Ü‚·i“ú–{Œê‚Ì Windows ‚Å•¶Žš‰»‚¯‚¹‚¸A“r’†‚Å•¶ŽšƒR[ƒh‚ðØ‚è‘Ö‚¦‚¸‚ÉŠmŽÀ‚É“®‚­‚æ‚¤‚Éj
 setlocal
-title ã‚¹ãƒ¬ã‚¹ãƒ‘2 ãƒ©ãƒ³è¨˜éŒ²ã®ã‚³ãƒ”ãƒ¼
+title ƒXƒŒƒXƒp2 ƒ‰ƒ“‹L˜^‚ÌƒRƒs[
 
 rem ============================================================
-rem  ã‚¹ãƒ¬ã‚¹ãƒ‘2ã® history ãƒ•ã‚©ãƒ«ãƒ€ï¼ˆã™ã¹ã¦ã®SteamIDãƒ»ã™ã¹ã¦ã® profileï¼‰ã‹ã‚‰
-rem  .run ãƒ•ã‚¡ã‚¤ãƒ«ã ã‘ã‚’ã€Œ%USERPROFILE%\sts2-runsã€ï¼ˆä¾‹ï¼šC:\Users\ã‚ãªãŸã®åå‰\sts2-runsï¼‰ã¸
-rem  ã‚³ãƒ”ãƒ¼ã—ã€æœ€å¾Œã«ã‚¢ãƒ—ãƒªã®ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™ã€‚
-rem  ãƒ»ã‚³ãƒ”ãƒ¼å…ˆã«ã¾ã ç„¡ã„ãƒ•ã‚¡ã‚¤ãƒ«ã ã‘ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã™
-rem  ãƒ»å…ƒã®ãƒ•ã‚¡ã‚¤ãƒ«ï¼ˆã‚²ãƒ¼ãƒ ã®ä¿å­˜å…ˆï¼‰ã¯èª­ã‚€ã ã‘ã§ã€å¤‰æ›´ã‚‚å‰Šé™¤ã‚‚ç§»å‹•ã‚‚ã—ã¾ã›ã‚“
-rem  ãƒ».run.backup ã¯ã‚³ãƒ”ãƒ¼ã—ã¾ã›ã‚“
-rem  OneDrive ã®ä¸­ã®ãƒ•ã‚©ãƒ«ãƒ€ã¯ã€SteamID ã‚’å«ã‚€ãƒ•ã‚¡ã‚¤ãƒ«ãŒåŒæœŸã•ã‚Œã‚‹ã®ã§é¿ã‘ã¦ã„ã¾ã™ã€‚
+rem  ƒXƒŒƒXƒp2‚Ì history ƒtƒHƒ‹ƒ_i‚·‚×‚Ä‚ÌSteamIDE‚·‚×‚Ä‚Ì profilej‚©‚ç
+rem  .run ƒtƒ@ƒCƒ‹‚¾‚¯‚ðu%USERPROFILE%\sts2-runsvi—áFC:\Users\‚ ‚È‚½‚Ì–¼‘O\sts2-runsj‚Ö
+rem  ƒRƒs[‚µAÅŒã‚ÉƒAƒvƒŠ‚Ìƒy[ƒW‚ðŠJ‚«‚Ü‚·B
+rem  EƒRƒs[æ‚É‚Ü‚¾–³‚¢ƒtƒ@ƒCƒ‹‚ðƒRƒs[‚µ‚Ü‚·
+rem  EƒRƒs[æ‚Ìƒtƒ@ƒCƒ‹‚ªŒ³‚æ‚è¬‚³‚¢i‘‚«‚©‚¯‚ðƒRƒs[‚µ‚½j‚Æ‚«‚ÍAƒRƒs[‚ðã‘‚«‚µ‚Ä’¼‚µ‚Ü‚·
+rem  EŒ³‚Ìƒtƒ@ƒCƒ‹iƒQ[ƒ€‚Ì•Û‘¶æj‚Í“Ç‚Þ‚¾‚¯‚ÅA•ÏX‚àíœ‚àˆÚ“®‚à‚µ‚Ü‚¹‚ñ
+rem  E.run.backup ‚ÍƒRƒs[‚µ‚Ü‚¹‚ñ
+rem  EŒ‹‰Ê‚ð %LOCALAPPDATA%\sts2-stats\last-copy.txt ‚É1s‚Å‘‚«‚Ü‚·i“úŽž‚ÆŒ”‚¾‚¯j
+rem  ˆø” /quietFÃ‚©‚Èƒ‚[ƒhiŽ©“®ŽÀs—pjBƒy[ƒW‚ðŠJ‚©‚¸A‘Ò‚½‚¸A‰æ–Ê‚àŽ~‚ß‚Ü‚¹‚ñ
+rem  OneDrive ‚Ì’†‚ÌƒtƒHƒ‹ƒ_‚ÍASteamID ‚ðŠÜ‚Þƒtƒ@ƒCƒ‹‚ª“¯Šú‚³‚ê‚é‚Ì‚Å”ð‚¯‚Ä‚¢‚Ü‚·B
 rem ============================================================
 
 set "URL=https://okitakunai.github.io/sts2-stats/"
 set "SRC_ROOT=%APPDATA%\SlayTheSpire2\steam"
 set "DEST=%USERPROFILE%\sts2-runs"
-rem å‹•ä½œãƒ†ã‚¹ãƒˆç”¨ã®è¨­å®šå€¤ï¼ˆç’°å¢ƒå¤‰æ•°ï¼‰ã€‚ãµã ã‚“ã¯ä½¿ã„ã¾ã›ã‚“
-rem   STS2_SRC_ROOTï¼šã‚³ãƒ”ãƒ¼å…ƒã® steam ãƒ•ã‚©ãƒ«ãƒ€ ï¼ STS2_DESTï¼šã‚³ãƒ”ãƒ¼å…ˆ
-rem   STS2_NO_BROWSERï¼šãƒšãƒ¼ã‚¸ã‚’é–‹ã‹ãªã„ ï¼ STS2_NO_WAITï¼šæœ€å¾Œã«å¾…ãŸãªã„
+set "LOG=%LOCALAPPDATA%\sts2-stats\last-copy.txt"
+set "QUIET="
+if /i "%~1"=="/quiet" set "QUIET=1"
+rem “®ìƒeƒXƒg—p‚ÌÝ’è’liŠÂ‹«•Ï”jB‚Ó‚¾‚ñ‚ÍŽg‚¢‚Ü‚¹‚ñ
+rem   STS2_SRC_ROOTFƒRƒs[Œ³‚Ì steam ƒtƒHƒ‹ƒ_ ^ STS2_DESTFƒRƒs[æ ^ STS2_LOGFŒ‹‰Ê‚ð‘‚­ƒtƒ@ƒCƒ‹
+rem   STS2_NO_BROWSERFƒy[ƒW‚ðŠJ‚©‚È‚¢ ^ STS2_NO_WAITFÅŒã‚É‘Ò‚½‚È‚¢
 if defined STS2_SRC_ROOT set "SRC_ROOT=%STS2_SRC_ROOT%"
 if defined STS2_DEST set "DEST=%STS2_DEST%"
+if defined STS2_LOG set "LOG=%STS2_LOG%"
+if defined QUIET (
+  set "STS2_NO_BROWSER=1"
+  set "STS2_NO_WAIT=1"
+)
 
-echo ã‚¹ãƒ¬ã‚¹ãƒ‘2ã®ãƒ©ãƒ³è¨˜éŒ²ï¼ˆ.runï¼‰ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã™ã€‚
-echo ã‚³ãƒ”ãƒ¼å…ˆï¼š%DEST%
+echo ƒXƒŒƒXƒp2‚Ìƒ‰ƒ“‹L˜^i.runj‚ðƒRƒs[‚µ‚Ü‚·B
+echo ƒRƒs[æF%DEST%
 echo.
 
 if not exist "%SRC_ROOT%\" (
-  echo ã‚²ãƒ¼ãƒ ã®ä¿å­˜å…ˆãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸï¼š%SRC_ROOT%
-  echo ã‚¹ãƒ¬ã‚¹ãƒ‘2ã‚’Steamç‰ˆã§ä¸€åº¦èµ·å‹•ã—ãŸã“ã¨ãŒã‚ã‚‹ã‹ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+  echo ƒQ[ƒ€‚Ì•Û‘¶æ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½F%SRC_ROOT%
+  echo ƒXƒŒƒXƒp2‚ðSteam”Å‚Åˆê“x‹N“®‚µ‚½‚±‚Æ‚ª‚ ‚é‚©Šm”F‚µ‚Ä‚­‚¾‚³‚¢B
+  call :log "Ž¸”sFƒQ[ƒ€‚Ì•Û‘¶æ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½"
   goto :stop
 )
 
 set IDS=0
 set HIST=0
 set NEW=0
+set UPD=0
 set SKIP=0
 set SIZEDIFF=0
 set FAILED=0
-rem steam ã®ä¸‹ã«ã‚ã‚‹æ•°å­—ã®ãƒ•ã‚©ãƒ«ãƒ€ï¼ˆSteamIDï¼‰ã¨ã€ãã®ä¸­ã® profile ã‚’ã™ã¹ã¦æŽ¢ã™
+rem steam ‚Ì‰º‚É‚ ‚é”Žš‚ÌƒtƒHƒ‹ƒ_iSteamIDj‚ÆA‚»‚Ì’†‚Ì profile ‚ð‚·‚×‚Ä’T‚·
 for /d %%S in ("%SRC_ROOT%\*") do call :scan_id "%%~fS"
 
 if "%HIST%"=="0" (
-  echo history ãƒ•ã‚©ãƒ«ãƒ€ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚
-  echo æŽ¢ã—ãŸå ´æ‰€ï¼š%SRC_ROOT%\ï¼ˆæ•°å­—ã®ãƒ•ã‚©ãƒ«ãƒ€ï¼‰\profileï¼ˆç•ªå·ï¼‰\saves\history
+  echo history ƒtƒHƒ‹ƒ_‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½B
+  echo ’T‚µ‚½êŠF%SRC_ROOT%\i”Žš‚ÌƒtƒHƒ‹ƒ_j\profilei”Ô†j\saves\history
+  call :log "Ž¸”sFhistory ƒtƒHƒ‹ƒ_‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½"
   goto :stop
 )
 
-echo è¦‹ã¤ã‹ã£ãŸ history ãƒ•ã‚©ãƒ«ãƒ€ï¼š%HIST% å€‹
-echo æ–°ã—ãã‚³ãƒ”ãƒ¼ã—ãŸ .run ãƒ•ã‚¡ã‚¤ãƒ«ï¼š%NEW% ä»¶
-echo æ—¢ã«ã‚ã£ãŸã®ã§é£›ã°ã—ãŸ .run ãƒ•ã‚¡ã‚¤ãƒ«ï¼š%SKIP% ä»¶
-if "%NEW%"=="0" echo æ–°ã—ã„ãƒ©ãƒ³ã¯ã‚ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚
+echo Œ©‚Â‚©‚Á‚½ history ƒtƒHƒ‹ƒ_F%HIST% ŒÂ
+echo V‚µ‚­ƒRƒs[‚µ‚½ .run ƒtƒ@ƒCƒ‹F%NEW% Œ
+if not "%UPD%"=="0" echo ‘‚«‚©‚¯‚¾‚Á‚½ƒRƒs[‚ð’¼‚µ‚½ .run ƒtƒ@ƒCƒ‹F%UPD% Œ
+echo Šù‚É‚ ‚Á‚½‚Ì‚Å”ò‚Î‚µ‚½ .run ƒtƒ@ƒCƒ‹F%SKIP% Œ
+if "%NEW%"=="0" echo V‚µ‚¢ƒ‰ƒ“‚Í‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½B
 
 set WARN=0
+set "NOTE="
 if not "%IDS%"=="1" (
   set WARN=1
+  set "NOTE=%NOTE% ’ˆÓFSteamID‚ÌƒtƒHƒ‹ƒ_‚ª%IDS%ŒÂ"
   echo.
-  echo â€»æ³¨æ„ï¼šSteamID ã®ãƒ•ã‚©ãƒ«ãƒ€ãŒ %IDS% å€‹ã‚ã‚Šã¾ã™ã€‚åˆ¥ã®ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã®è¨˜éŒ²ãŒæ··ã–ã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚
-  echo ã€€ã€€ã€€ã€€æ··ã–ã‚‹ã¨ã€ã‚·ãƒ³ã‚°ãƒ«ã®é›†è¨ˆã«ä»–ã®ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã®ãƒ©ãƒ³ãŒå…¥ã‚Šã¾ã™ã€‚åˆ†ã‘ãŸã„å ´åˆã¯ README ã‚’è¦‹ã¦ãã ã•ã„ã€‚
+  echo ¦’ˆÓFSteamID ‚ÌƒtƒHƒ‹ƒ_‚ª %IDS% ŒÂ‚ ‚è‚Ü‚·B•Ê‚ÌƒAƒJƒEƒ“ƒg‚Ì‹L˜^‚ª¬‚´‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
+  echo @@@@¬‚´‚é‚ÆAƒVƒ“ƒOƒ‹‚ÌWŒv‚É‘¼‚ÌƒAƒJƒEƒ“ƒg‚Ìƒ‰ƒ“‚ª“ü‚è‚Ü‚·B•ª‚¯‚½‚¢ê‡‚Í README ‚ðŒ©‚Ä‚­‚¾‚³‚¢B
 )
 if not "%SIZEDIFF%"=="0" (
   set WARN=1
+  set "NOTE=%NOTE% ’ˆÓFƒRƒs[‚Ì•û‚ª‘å‚«‚¢ƒtƒ@ƒCƒ‹%SIZEDIFF%Œ"
   echo.
-  echo â€»æ³¨æ„ï¼šåŒã˜åå‰ã ãŒå¤§ãã•ãŒé•ã†ãŸã‚ã€ã‚³ãƒ”ãƒ¼ã—ãªã‹ã£ãŸãƒ•ã‚¡ã‚¤ãƒ«ãŒ %SIZEDIFF% ä»¶ã‚ã‚Šã¾ã™ã€‚
-  echo ã€€ã€€ã€€ã€€ã‚²ãƒ¼ãƒ ãŒæ›¸ãè¾¼ã‚“ã§ã„ã‚‹é€”ä¸­ã«ã‚³ãƒ”ãƒ¼ã—ã¦ã€é€”ä¸­ã¾ã§ã—ã‹å…¥ã£ã¦ã„ãªã„å¯èƒ½æ€§ã‚‚ã‚ã‚Šã¾ã™ã€‚
-  echo ã€€ã€€ã€€ã€€ã‚²ãƒ¼ãƒ ã‚’çµ‚äº†ã—ã¦ã‹ã‚‰ã€sts2-runs ã®ä¸­ã®ãã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ¶ˆã—ã¦ã€ã‚‚ã†ä¸€åº¦å®Ÿè¡Œã—ã¦ãã ã•ã„ã€‚
+  echo ¦’ˆÓFƒRƒs[‚Ì•û‚ªŒ³‚æ‚è‘å‚«‚¢‚½‚ßA‚»‚Ì‚Ü‚Ü‚É‚µ‚½ƒtƒ@ƒCƒ‹‚ª %SIZEDIFF% Œ‚ ‚è‚Ü‚·B
+  echo @@@@•Ê‚Ì profile ‚É“¯‚¶–¼‘O‚Ìƒtƒ@ƒCƒ‹‚ª‚ ‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
 )
 if not "%FAILED%"=="0" (
   set WARN=1
+  set "NOTE=%NOTE% Ž¸”sFƒRƒs[‚Å‚«‚È‚©‚Á‚½ƒtƒ@ƒCƒ‹%FAILED%Œ"
   echo.
-  echo â€»ä¸€éƒ¨ã®ãƒ•ã‚¡ã‚¤ãƒ«ï¼ˆ%FAILED% ä»¶ï¼‰ã‚’ã‚³ãƒ”ãƒ¼ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚ã‚²ãƒ¼ãƒ ã‚’çµ‚äº†ã—ã¦ã‹ã‚‰ã€ã‚‚ã†ä¸€åº¦å®Ÿè¡Œã—ã¦ãã ã•ã„ã€‚
+  echo ¦ˆê•”‚Ìƒtƒ@ƒCƒ‹i%FAILED% Œj‚ðƒRƒs[‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½BŽŸ‚ÌŽÀs‚Å‚à‚¤ˆê“xŽŽ‚µ‚Ü‚·B
 )
+call :log "V‹K%NEW%Œ ‘‚«‚©‚¯‚ð’¼‚µ‚½%UPD%Œ Šù‘¶%SKIP%Œ%NOTE%"
 
 echo.
-echo ã‚¢ãƒ—ãƒªã®ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™ï¼š%URL%
-if not defined STS2_NO_BROWSER start "" "%URL%"
+if not defined STS2_NO_BROWSER (
+  echo ƒAƒvƒŠ‚Ìƒy[ƒW‚ðŠJ‚«‚Ü‚·F%URL%
+  start "" "%URL%"
+)
 
 if "%WARN%"=="1" goto :wait
-rem ä½•ã‚‚å•é¡ŒãŒç„¡ã„ã¨ãã ã‘ã€5ç§’å¾Œã«è‡ªå‹•ã§é–‰ã˜ã‚‹
+rem ‰½‚à–â‘è‚ª–³‚¢‚Æ‚«‚¾‚¯A5•bŒã‚ÉŽ©“®‚Å•Â‚¶‚é
 if defined STS2_NO_WAIT exit /b 0
-echo ã“ã®ç”»é¢ã¯5ç§’å¾Œã«é–‰ã˜ã¾ã™ã€‚
+echo ‚±‚Ì‰æ–Ê‚Í5•bŒã‚É•Â‚¶‚Ü‚·B
 timeout /t 5 /nobreak > nul
 exit /b 0
 
 :stop
 echo.
-echo ã‚¢ãƒ—ãƒªã®ãƒšãƒ¼ã‚¸ã¯é–‹ãã¾ã›ã‚“ã€‚
+echo ƒAƒvƒŠ‚Ìƒy[ƒW‚ÍŠJ‚«‚Ü‚¹‚ñB
 :wait
 if defined STS2_NO_WAIT exit /b 1
 echo.
 pause
 exit /b 1
 
-rem ---- SteamID ã®ãƒ•ã‚©ãƒ«ãƒ€1ã¤åˆ†ã‚’èª¿ã¹ã‚‹
+rem ---- Œ‹‰Ê‚ð1s‚Å‹L˜^‚·‚éi“úŽž‚ÆŒ”‚¾‚¯BSteamID ‚È‚Ç‚Í‘‚©‚È‚¢j
+:log
+for %%L in ("%LOG%") do if not exist "%%~dpL" mkdir "%%~dpL" > nul 2>&1
+> "%LOG%" echo %date% %time:~0,8% %~1
+exit /b 0
+
+rem ---- SteamID ‚ÌƒtƒHƒ‹ƒ_1‚Â•ª‚ð’²‚×‚é
 :scan_id
 set FOUND_HERE=0
 for /d %%P in ("%~1\profile*") do (
@@ -101,7 +128,7 @@ for /d %%P in ("%~1\profile*") do (
 if not "%FOUND_HERE%"=="0" set /a IDS+=1
 exit /b 0
 
-rem ---- history ãƒ•ã‚©ãƒ«ãƒ€1ã¤åˆ†ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹
+rem ---- history ƒtƒHƒ‹ƒ_1‚Â•ª‚ðƒRƒs[‚·‚é
 :copy_one
 set /a HIST+=1
 set /a FOUND_HERE+=1
@@ -111,16 +138,24 @@ for %%F in ("%~1\*.run") do (
 )
 exit /b 0
 
-rem ---- ãƒ•ã‚¡ã‚¤ãƒ«1ã¤ï¼šã‚³ãƒ”ãƒ¼å…ˆã«åŒã˜åå‰ãŒã‚ã‚Œã°ä¸€åˆ‡è§¦ã‚‰ãªã„ï¼ˆå¤§ãã•ãŒé•ãˆã°æ•°ãˆã‚‹ã ã‘ï¼‰
+rem ---- ƒtƒ@ƒCƒ‹1‚Â
+rem  ƒRƒs[æ‚É–³‚¢FƒRƒs[‚·‚é
+rem  ƒRƒs[æ‚ªŒ³‚æ‚è¬‚³‚¢i‘‚«‚©‚¯‚ðƒRƒs[‚µ‚½jFƒRƒs[‚ðã‘‚«‚µ‚Ä’¼‚·iŒ³‚Ìƒtƒ@ƒCƒ‹‚É‚ÍG‚ê‚È‚¢j
+rem  ƒRƒs[æ‚ªŒ³‚Æ“¯‚¶‘å‚«‚³F‰½‚à‚µ‚È‚¢ ^ ƒRƒs[æ‚ªŒ³‚æ‚è‘å‚«‚¢F‰½‚à‚¹‚¸”‚¦‚é‚¾‚¯
 :copy_file
 if exist "%DEST%\%~2" (
-  call :compare_size "%DEST%\%~2" "%~3"
+  call :compare "%~1" "%DEST%\%~2" "%~3"
   exit /b 0
 )
 copy /b "%~1" "%DEST%\%~2" > nul 2>&1
 if errorlevel 1 (set /a FAILED+=1) else (set /a NEW+=1)
 exit /b 0
 
-:compare_size
-if "%~z1"=="%~2" (set /a SKIP+=1) else (set /a SIZEDIFF+=1)
+:compare
+set /a SRC_SIZE=%~3
+set /a DST_SIZE=%~z2
+if %SRC_SIZE% EQU %DST_SIZE% (set /a SKIP+=1& exit /b 0)
+if %SRC_SIZE% LSS %DST_SIZE% (set /a SIZEDIFF+=1& exit /b 0)
+copy /b /y "%~1" "%~2" > nul 2>&1
+if errorlevel 1 (set /a FAILED+=1) else (set /a UPD+=1)
 exit /b 0
