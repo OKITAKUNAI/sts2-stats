@@ -29,7 +29,7 @@ v0.98.1 〜 v0.111.0（Steam版）の記録で動作を確認しています。�
 `.run` がラン記録です。`.run.backup` は `.run` の完全なコピーなので、このアプリは読み込みません。profile1 以外（profile2 など）にも記録がある場合があります（profile2 以降は、実際の記録ではまだ確かめていません）。
 
 ## 使い方（Windows・Chrome / Edge）
-上の場所（AppData の中）は、ブラウザの安全のための制限で、アプリからフォルダとして直接選べません。そこで、付属の `copy-runs.bat` で .run ファイルだけを普通の場所にコピーしてから読み込みます。`copy-runs.bat` は、コピーが終わるとこのアプリのページ（https://okitakunai.github.io/sts2-stats/）を開きます。
+上の場所（AppData の中）は、ブラウザの安全のための制限で、アプリからフォルダとして直接選べません。そこで、付属の `copy-runs.bat` で .run ファイルだけを普通の場所にコピーしてから読み込みます。`copy-runs.bat` は、コピーが終わるとこのアプリのページ（[https://okitakunai.github.io/sts2-stats/](https://okitakunai.github.io/sts2-stats/)）を開きます。
 
 ### copy-runs.bat の入手（最初の1回だけ）
 1. このページ（GitHub の sts2-stats のページ）のファイル一覧で `copy-runs.bat` を押します。
@@ -49,7 +49,7 @@ v0.98.1 〜 v0.111.0（Steam版）の記録で動作を確認しています。�
 - 読む許可が残っていれば、ページを開いたときに新しいランが自動で読み込まれます。
 - 許可が残っていなければ、「新しいランを読み込む」ボタンが目立って表示されるので、押してください（許可の確認が出ます）。
 
-ゲームを遊ぶだけでは自動で読み込まれません。自動で読み込めるのは、Chrome か Edge で、公開ページ（https://okitakunai.github.io/sts2-stats/）で記憶したフォルダだけです。手元で動かしたページ（`start-server.bat` で開く 127.0.0.1）は、ブラウザの保存場所が別なので、自動では読み込まれません。
+ゲームを遊ぶだけでは自動で読み込まれません。自動で読み込めるのは、Chrome か Edge で、公開ページ（[https://okitakunai.github.io/sts2-stats/](https://okitakunai.github.io/sts2-stats/)）で記憶したフォルダだけです。手元で動かしたページ（`start-server.bat` で開く 127.0.0.1）は、ブラウザの保存場所が別なので、自動では読み込まれません。
 
 ### copy-runs.bat がしていること
 - `%APPDATA%\SlayTheSpire2\steam` の中から、すべての SteamID のフォルダと、すべての profile の `saves\history` を自動で探し、`.run` ファイルを `%USERPROFILE%\sts2-runs` へコピーします
